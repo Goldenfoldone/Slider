@@ -1,4 +1,4 @@
-let file = [{
+const data = [{
     url:"./image\\ 1.png",
     city:`Rostov-on-Don 
 LCD admiral`,
@@ -18,26 +18,26 @@ Patriotic`,
     time:"3 months"
 }]
 function initSlider(){
-    if (!file || !file.length) {return};
+    if (data.length === 0) return;
 
     let sliderImage = document.querySelector('.right__btnblock_images')
     let sliderArrows = document.querySelector('.slider__arrow')
     let sliderDots = document.querySelector('.slider__dots')
-    let btn = document.querySelector('.right__btnblock')
-    let text_city = document.querySelector('.city')
-    let text_area = document.querySelector('.area')
-    let text_time = document.querySelector('.time')
+    let buttons = document.querySelector('.right__btnblock')
+    let textCity = document.querySelector('.city')
+    let textArea = document.querySelector('.area')
+    let textTime = document.querySelector('.time')
     
 
     initImage();
     initArrows();
     initDots();
     initText();
-    initBTN();
+    initButton();
 
 
     function initImage(){
-        file.forEach((image, index) => {
+        data.forEach((image, index) => {
             let imageDiv = `<div class="image n${index} ${index === 0 ? "active" : ""}" style="background-image:url(${image.url})" data-index="${index}"></div>`;
             sliderImage.innerHTML += imageDiv
         })
@@ -45,12 +45,12 @@ function initSlider(){
     function initArrows(){
         sliderArrows.querySelectorAll('.slider__arrows').forEach((arrow) => {
             arrow.addEventListener('click',function() {
-                let curNumber = +sliderImage.querySelector('.active').dataset.index;
+                const curNumber = +sliderImage.querySelector('.active').dataset.index;
                 let nextNumber;
                 if (arrow.classList.contains('left')){
-                    nextNumber = curNumber === 0 ? file.length - 1 : curNumber - 1
+                    nextNumber = curNumber === 0 ? data.length - 1 : curNumber - 1
                 } else{
-                    nextNumber = curNumber === file.length - 1 ?  0 : curNumber + 1
+                    nextNumber = curNumber === data.length - 1 ?  0 : curNumber + 1
                 }
                 moveSlider(nextNumber)
             })
@@ -58,8 +58,8 @@ function initSlider(){
     }
 
     function initDots(){
-        file.forEach((image, index) => {
-            let dot = `<div class="slider__dots-item n${index} ${index === 0 ? "active" : ""}" data-index ='${index}'></div>`
+        data.forEach((image, index) => {
+            const dot = `<div class="slider__dots-item n${index} ${index === 0 ? "active" : ""}" data-index ='${index}'></div>`
             sliderDots.innerHTML += dot;
         })
         sliderDots.querySelectorAll(".slider__dots-item").forEach((dot)=>{
@@ -69,12 +69,12 @@ function initSlider(){
         })
     }
 
-    function initBTN(){
-        file.forEach((image, index) => {
-            let bt = `<a class="right__btnblock_btn n${index} ${index === 0 ? "active" : ""}" data-index ='${index}'>${image.city}</a>`
-            btn.innerHTML += bt;
+    function initButton(){
+        data.forEach((image, index) => {
+            const bt = `<a class="right__btnblock_btn n${index} ${index === 0 ? "active" : ""}" data-index ='${index}'>${image.city}</a>`
+            buttons.innerHTML += bt;
         })
-        btn.querySelectorAll('.right__btnblock_btn').forEach((bt)=>{
+        buttons.querySelectorAll('.right__btnblock_btn').forEach((bt)=>{
             bt.addEventListener("click",function(){
                 moveSlider(this.dataset.index)
             })
@@ -82,22 +82,22 @@ function initSlider(){
     }
 
     function initText(){
-        let city = `<pre class="left__table_block_text">${file[0].city}</pre>`
-        text_city.innerHTML += city
-        let area = `<pre class="left__table_block_text">${file[0].area}</pre>`
-        text_area.innerHTML += area
-        let time = `<pre class="left__table_block_text">${file[0].time}</pre>`
-        text_time.innerHTML += time
+        const city = `<pre class="left__table_block_text">${data[0].city}</pre>`
+        textCity.innerHTML += city
+        const area = `<pre class="left__table_block_text">${data[0].area}</pre>`
+        textArea.innerHTML += area
+        const time = `<pre class="left__table_block_text">${data[0].time}</pre>`
+        textTime.innerHTML += time
         
     }
 
     function changeTitle(num){
-        let sliderTitle = text_city.querySelector(".left__table_block_text");
-        sliderTitle.innerText = file[num].city;
-        let slider = text_area.querySelector(".left__table_block_text");
-        slider.innerText = file[num].area;
-        let sliderT = text_time.querySelector(".left__table_block_text");
-        sliderT.innerText = file[num].time;
+        const sliderTitle = textCity.querySelector(".left__table_block_text");
+        sliderTitle.innerText = data[num].city;
+        const slider = textArea.querySelector(".left__table_block_text");
+        slider.innerText = data[num].area;
+        const sliderT = textTime.querySelector(".left__table_block_text");
+        sliderT.innerText = data[num].time;
     }
 
     function moveSlider(num) {
@@ -105,8 +105,8 @@ function initSlider(){
         sliderImage.querySelector(".n" + num).classList.add('active')        
         sliderDots.querySelector(".active").classList.remove("active");
         sliderDots.querySelector(".n" + num).classList.add("active");
-        btn.querySelector(".active").classList.remove("active");
-        btn.querySelector(".n" + num).classList.add("active");
+        buttons.querySelector(".active").classList.remove("active");
+        buttons.querySelector(".n" + num).classList.add("active");
         changeTitle(num)
         
     }
